@@ -9,12 +9,20 @@ import SwiftUI
 
 @main
 struct EStoreSwiftUIApp: App {
+    @StateObject private var authManager = AuthManager()
     let persistenceController = PersistenceController.shared
+    let isLogin = UserDefaults.standard.bool(forKey: UserDefaultKey.isLogin.rawValue)
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            if authManager.isLoggedIn {
+                MainPage()
+                    .environmentObject(authManager)
+            }else {
+                ContentView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(authManager)
+            }
         }
     }
 }

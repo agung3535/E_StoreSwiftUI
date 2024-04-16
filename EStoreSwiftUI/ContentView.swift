@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             NavigationStack {
-                LoginPage()
+                LoginPage(vm: LoginViewModel(authService: AuthService()))
             }
         }
     }
